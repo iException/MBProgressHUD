@@ -449,6 +449,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 - (void)setupLabels {
     label = [[UILabel alloc] initWithFrame:self.bounds];
     label.adjustsFontSizeToFitWidth = NO;
+    label.numberOfLines = 0;
     label.textAlignment = MBLabelAlignmentCenter;
     label.opaque = NO;
     label.backgroundColor = [UIColor clearColor];
@@ -537,7 +538,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
     totalSize.width = MAX(totalSize.width, indicatorF.size.width);
     totalSize.height += indicatorF.size.height;
     
-    CGSize labelSize = MB_TEXTSIZE(label.text, label.font);
+    CGSize labelSize = [label.text boundingRectWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName : label.font} context:nil].size;
     labelSize.width = MIN(labelSize.width, maxWidth);
     totalSize.width = MAX(totalSize.width, labelSize.width);
     totalSize.height += labelSize.height;
